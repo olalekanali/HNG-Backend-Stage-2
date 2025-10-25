@@ -202,6 +202,14 @@ app.get("/countries", async (req, res) => {
   }
 });
 
+// GET /countries/image
+app.get("/countries/image", (req, res) => {
+  if (!fs.existsSync(SUMMARY_IMAGE)) {
+    return res.status(404).json({ error: "Summary image not found" });
+  }
+  res.sendFile(path.resolve(SUMMARY_IMAGE));
+});
+
 // GET /countries/:name
 app.get("/countries/:name", async (req, res) => {
   try {
@@ -250,13 +258,7 @@ app.get("/status", async (req, res) => {
   }
 });
 
-// GET /countries/image
-app.get("/countries/image", (req, res) => {
-  if (!fs.existsSync(SUMMARY_IMAGE)) {
-    return res.status(404).json({ error: "Summary image not found" });
-  }
-  res.sendFile(path.resolve(SUMMARY_IMAGE));
-});
+
 
 // global error handler (last)
 app.use((err, req, res, next) => {
